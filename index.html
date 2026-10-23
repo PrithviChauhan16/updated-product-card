@@ -553,71 +553,130 @@
         </div>
     </footer>
 
-    <!-- PRODUCT QUICK-VIEW MODAL -->
-    <div id="product-modal"
-        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+    <!-- PRODUCT QUICK-VIEW MODAL (APP-LIKE DESIGN) -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden items-end sm:items-center justify-center sm:p-6 opacity-0 transition-opacity duration-300">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
-        <div class="relative w-full max-w-5xl bg-white rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
-
-            <button onclick="closeModal()"
-                class="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur border border-gray-200 p-2 rounded-full hover:bg-gray-100 text-gray-800 transition-transform">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
+        
+        <!-- Modal Container (Slides up on mobile, centers on desktop) -->
+        <div class="relative w-full max-w-md bg-[#FAF7F2] sm:rounded-[2rem] rounded-t-[2rem] overflow-hidden shadow-2xl flex flex-col h-[90vh] sm:h-auto sm:max-h-[90vh] transform transition-transform translate-y-full sm:translate-y-0" id="modal-content-container">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-white/80 backdrop-blur border border-gray-200 p-2 rounded-full hover:bg-gray-100 text-gray-800 transition-transform">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- Image Track & Thumbnails Area -->
-            <div class="md:w-1/2 p-6 bg-gray-50 flex flex-col gap-4 overflow-y-auto border-r border-gray-100">
-                <div class="relative w-full aspect-square rounded-[2rem] overflow-hidden bg-white border border-gray-100 shadow-sm group/modal-slider">
-                    <!-- Swipeable Track container -->
-                    <div id="modal-swipe-track" class="flex overflow-x-auto snap-x snap-mandatory h-full w-full no-scrollbar relative z-10"></div>
-
-                    <!-- Desktop Navigation Arrows -->
-                    <button onclick="scrollModalSlider(-1)" class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 backdrop-blur hover:bg-gray-50 text-gray-900 w-10 h-10 rounded-full items-center justify-center opacity-0 group-hover/modal-slider:opacity-100 transition-all shadow-md z-30 pb-1 text-2xl leading-none cursor-pointer">‹</button>
-                    <button onclick="scrollModalSlider(1)" class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 backdrop-blur hover:bg-gray-50 text-gray-900 w-10 h-10 rounded-full items-center justify-center opacity-0 group-hover/modal-slider:opacity-100 transition-all shadow-md z-30 pb-1 text-2xl leading-none cursor-pointer">›</button>
+            <!-- Scrollable Content Area -->
+            <div class="overflow-y-auto w-full pb-40 no-scrollbar bg-white rounded-t-[2rem]">
+                <!-- Image Slider -->
+                <div class="relative w-full aspect-[4/5] bg-[#FDFBF7] overflow-hidden group/modal-slider">
+                    <div id="modal-swipe-track" class="flex overflow-x-auto snap-x snap-mandatory h-full w-full no-scrollbar relative z-10 touch-pan-x"></div>
+                    <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 pointer-events-none z-30" id="modal-dots"></div>
                 </div>
 
-                <div class="grid grid-cols-4 gap-3 mt-2" id="modal-thumbnails"></div>
+                <div class="p-6 bg-[#FAF7F2]">
+                    <!-- Badges -->
+                    <div class="flex flex-wrap gap-2 mb-4" id="modal-badges">
+                        <span class="bg-pink-50 text-pink-500 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-pink-100">Animal Kingdom</span>
+                        <span class="bg-green-50 text-green-600 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-green-100">New-Arrival</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h2 class="text-2xl md:text-3xl font-cloud font-semibold text-gray-900 mb-2 uppercase" id="modal-title"></h2>
+                    
+                    <!-- Trust text -->
+                    <p class="text-green-600 text-[11px] flex items-center gap-1 mb-4 font-medium">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        Materials, dimensions and certifications are shown below.
+                    </p>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6" id="modal-short-desc"></p>
+
+                    <!-- Sizes -->
+                    <div id="modal-sizes-container" class="mb-6 hidden">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-3">Choose Size</label>
+                        <div id="modal-size-options" class="flex items-center gap-3 flex-wrap"></div>
+                    </div>
+                    
+                    <!-- Colors -->
+                    <div id="modal-colors-container" class="mb-6 hidden">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-3">Choose Color</label>
+                        <div id="modal-color-options" class="flex items-center gap-3 flex-wrap"></div>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="mb-8" id="modal-price"></div>
+                    
+                    <!-- Special Combo Callout -->
+                    <div class="bg-orange-50 border border-orange-100 rounded-xl p-3 mb-6 flex items-center gap-2">
+                        <span class="text-xl">🎉</span>
+                        <p class="text-sm text-gray-800"><span class="font-bold">Special Combo Offer:</span> On plushies only</p>
+                    </div>
+
+                    <!-- Accordions -->
+                    <div class="border-t border-gray-200 divide-y divide-gray-200 mt-6">
+                        
+                        <!-- Specifications Accordion -->
+                        <div class="py-4">
+                            <button class="flex justify-between items-center w-full text-left font-bold text-gray-900 focus:outline-none" onclick="toggleAccordion('acc-specs', this)">
+                                <span>Specifications</span>
+                                <svg class="w-5 h-5 text-gray-500 transition-transform transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <div id="acc-specs" class="hidden mt-4 text-sm text-gray-600">
+                                <ul class="grid grid-cols-2 gap-y-4 gap-x-2" id="modal-specs-list"></ul>
+                            </div>
+                        </div>
+
+                        <!-- Product Details Accordion -->
+                        <div class="py-4">
+                            <button class="flex justify-between items-center w-full text-left font-bold text-gray-900 focus:outline-none" onclick="toggleAccordion('acc-details', this)">
+                                <span>Product Details</span>
+                                <svg class="w-5 h-5 text-gray-500 transition-transform transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <div id="acc-details" class="hidden mt-4 text-sm text-gray-600 leading-relaxed space-y-3" id="modal-long-desc"></div>
+                        </div>
+                        
+                        <!-- Shipping Accordion -->
+                        <div class="py-4">
+                            <button class="flex justify-between items-center w-full text-left font-bold text-gray-900 focus:outline-none" onclick="toggleAccordion('acc-shipping', this)">
+                                <span>Shipping Information</span>
+                                <svg class="w-5 h-5 text-gray-500 transition-transform transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <div id="acc-shipping" class="hidden mt-4 text-sm text-gray-600">
+                                Free standard shipping on all orders. Ships within 24-48 hours. Secure packaging for your new companion!
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Details Area -->
-            <div class="md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto">
-                <div class="text-[11px] text-gray-500 font-bold tracking-widest uppercase mb-2" id="modal-category">
-                </div>
-                <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-2" id="modal-title"></h2>
-                <div class="text-xl font-medium text-gray-600 mb-6" id="modal-price"></div>
+            <!-- STICKY BOTTOM ACTION BAR -->
+            <div class="absolute bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 pb-6 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.04)] sm:pb-4 rounded-b-[2rem]">
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <img id="modal-sticky-img" src="" class="w-10 h-10 rounded-md object-cover border border-gray-200" alt="thumbnail">
+                            <span class="text-[10px] text-orange-500 font-bold" id="modal-stock-status">Only 1 left in stock</span>
+                        </div>
+                        
+                        <!-- Quantity Selector -->
+                        <div class="flex items-center border border-orange-500 rounded-full px-2 py-1">
+                            <button type="button" class="text-orange-500 font-bold px-2 text-lg hover:text-orange-600" onclick="updateModalQty(-1)">-</button>
+                            <span class="text-gray-800 font-semibold px-3 text-sm" id="modal-qty-display">1</span>
+                            <button type="button" class="text-orange-500 font-bold px-2 text-lg hover:text-orange-600" onclick="updateModalQty(1)">+</button>
+                        </div>
+                    </div>
 
-        <!-- DYNAMIC COLOR SELECTION -->
-<div id="modal-colors-container" class="mb-6 hidden">
-    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Select Color <span class="text-pink-500">*</span></label>
-    <div id="modal-color-options" class="flex items-center gap-2 flex-wrap"></div>
-</div>
-
-<!-- DYNAMIC SIZE SELECTION -->
-<div id="modal-sizes-container" class="mb-6 hidden">
-    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Select Size <span class="text-pink-500">*</span></label>
-    <div id="modal-size-options" class="flex items-center gap-2 flex-wrap"></div>
-</div>
-
-                <div class="flex gap-6 border-b border-gray-200 mb-6">
-                    <button onclick="switchTab('desc')" id="tab-btn-desc"
-                        class="pb-2 font-medium text-gray-900 border-b-2 border-gray-900">Description</button>
-                    <button onclick="switchTab('specs')" id="tab-btn-specs"
-                        class="pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent">Specifications</button>
-                </div>
-
-                <div id="tab-desc" class="text-gray-600 mb-6 leading-relaxed text-sm md:text-base block"></div>
-                <div id="tab-specs" class="hidden">
-                    <ul class="text-gray-600 space-y-2 text-sm list-disc pl-5" id="modal-specs-list"></ul>
-                </div>
-
-                <div class="mt-auto flex gap-4 pt-8">
-                    <button id="modal-add-cart-btn"
-                        class="flex-1 bg-white border border-gray-300 text-gray-800 py-4 rounded-full font-medium hover:border-gray-900 transition-colors shadow-sm">Add
-                        to Cart</button>
-                    <button id="modal-buy-now-btn" onclick="window.location.href='checkout.html'" class="flex-1 bg-brand-900 text-white py-4 rounded-full font-medium hover:bg-pink-500 transition-colors shadow-md">Buy Now</button>
+                    <div class="flex gap-3">
+                        <button id="modal-add-cart-btn" class="flex-1 bg-orange-400 text-white font-bold py-3 rounded-full hover:bg-orange-500 transition-colors shadow-sm text-sm">
+                            Add to Cart
+                        </button>
+                        <button id="modal-buy-now-btn" class="flex-1 bg-[#4A2B29] text-white font-bold py-3 rounded-full hover:bg-[#3a2220] transition-colors shadow-sm text-sm">
+                            Buy Now
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -661,25 +720,6 @@
                 }, 500);
             }
         }, 4000);
-
-        function switchTab(tab) {
-            const tabDesc = document.getElementById('tab-desc');
-            const tabSpecs = document.getElementById('tab-specs');
-            const btnDesc = document.getElementById('tab-btn-desc');
-            const btnSpecs = document.getElementById('tab-btn-specs');
-
-            if (tab === 'desc') {
-                tabDesc.classList.remove('hidden');
-                tabSpecs.classList.add('hidden');
-                btnDesc.className = "pb-2 font-medium text-gray-900 border-b-2 border-gray-900";
-                btnSpecs.className = "pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent transition-colors";
-            } else {
-                tabSpecs.classList.remove('hidden');
-                tabDesc.classList.add('hidden');
-                btnSpecs.className = "pb-2 font-medium text-gray-900 border-b-2 border-gray-900";
-                btnDesc.className = "pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent transition-colors";
-            }
-        }
 
         const leftImages = ['2.png', '3.png'];
         const rightImages = ['5.png', '6.png'];
