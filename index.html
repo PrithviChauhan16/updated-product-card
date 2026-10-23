@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEPEKUN | Discover Softness</title>
+    <!-- Fixes the favicon 404 error -->
+    <link rel="icon" href="1pepe-logo.png">
+    
+    <!-- Google Fonts: Outfit (Body) and Fredoka (Cloud-like Headings) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        if (window.tailwind) {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { 
+                            sans: ['Outfit', 'sans-serif'],
+                            cloud: ['Fredoka', 'sans-serif'] // Puffy, rounded font for plushies
+                        },
+                        colors: { brand: { 50: '#fdfbf7', 900: '#1a1a1a' } },
+                        keyframes: {
+                            float: {
+                                '0%, 100%': { transform: 'translateY(0)' },
+                                '50%': { transform: 'translateY(-10px)' },
+                            }
+                        },
+                        animation: {
+                            float: 'float 6s ease-in-out infinite',
+                        }
+                    }
+                }
+            };
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .bg-section-1 {
+            background-image: url('spinning2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+        }
+
+        .bg-section-2 {
+            background-image: url('spinning1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+        }
+
+        @media (min-width: 768px) {
+            .bg-section-1,
+            .bg-section-2 {
+                background-attachment: fixed;
+            }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        /* Pause animation when user hovers over the showcase */
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body class="text-brand-900 antialiased selection:bg-pink-200 bg-[#F4E8FA]">
+
+    <!-- FLOATING NAVBAR -->
+    <nav class="fixed top-4 left-0 right-0 z-50 w-[95%] max-w-6xl mx-auto bg-white/50 backdrop-blur-sm border border-white/50 px-6 py-4 shadow-lg rounded-3xl transition-all duration-300">
+        <div class="flex items-center justify-between">
+
+            <a href="#home" class="flex items-center ml-2">
+                <img src="1pepe-logo.png" alt="PEPEKUN Logo" class="h-10 md:h-12 w-auto object-contain">
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-8 text-sm font-medium items-center absolute left-1/2 -translate-x-1/2">
+                <a href="#home" class="hover:text-pink-500 transition-colors">Home</a>
+                <a href="#about" class="hover:text-pink-500 transition-colors">About Us</a>
+                <a href="#contact" class="hover:text-pink-500 transition-colors">Contact</a>
+            </div>
+
+            <!-- Desktop Actions -->
+            <div class="hidden md:flex gap-4 text-sm font-medium items-center mr-2">
+                <button onclick="window.location.href='cart.html'"
+                    class="hover:text-pink-500 transition-colors flex items-center gap-1 relative">
+                    Cart
+                    <span id="cart-count"
+                        class="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full font-bold ml-1">0</span>
+                </button>
+                <a href="login.html" id="auth-login-btn"
+                    class="bg-brand-900 text-white px-6 py-2 rounded-full hover:bg-pink-500 transition-colors shadow-md text-center min-w-[100px]">Log
+                    In</a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button onclick="toggleMobileMenu()"
+                class="md:hidden p-2 text-gray-600 hover:text-pink-500 focus:outline-none transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu"
+            class="hidden flex-col gap-4 pt-6 pb-4 border-t border-gray-200 mt-4 text-center text-base font-medium md:hidden animate-[fadeIn_0.2s_ease-in]">
+            <a href="#home" onclick="toggleMobileMenu()" class="hover:text-pink-500 transition-colors">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="hover:text-pink-500 transition-colors">About Us</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-pink-500 transition-colors">Contact</a>
+            <a href="cart.html"
+                class="hover:text-pink-500 transition-colors py-2 flex items-center justify-center gap-2">
+                Cart <span id="cart-count-mobile"
+                    class="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+            </a>
+            <a href="login.html" id="mobile-auth-btn"
+                class="bg-brand-900 text-white px-6 py-3 rounded-full mx-auto inline-block w-[80%] max-w-[200px] mt-2 shadow-sm">Log
+                In</a>
+        </div>
+    </nav>
+
+    <!-- UNIFIED HERO, CATEGORY & PRODUCT BACKGROUND -->
+    <div class="bg-section-2 relative overflow-hidden w-full min-h-screen">
+        <div class="absolute inset-0 bg-white/50 backdrop-blur-sm z-0 pointer-events-none"></div>
+
+        <div class="relative z-10 pt-24 md:pt-28 pb-16">
+
+            <!-- BANNER -->
+            <header id="home"
+                class="relative w-full max-w-7xl mx-auto px-4 md:px-6 rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-transparent flex justify-center">
+                <img id="banner-slider" src="banner.png" class="w-full h-auto object-contain transition-opacity duration-500 shadow-lg rounded-[2rem] md:rounded-[3rem]"
+                    alt="PEPEKUN Banner">
+            </header>
+<!-- HUG LIFE PEPE KUN BANNER SUB-SECTION -->
+    <section class="relative w-full max-w-7xl mx-auto px-4 md:px-6 my-6">
+        <!-- Glassmorphism Container with Soft Translucency -->
+        <div class="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-white/30 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(255,182,193,0.15)] p-6 md:p-8 text-center flex flex-col items-center justify-center">
+            
+            <!-- Soft Toys & Pastel Background Glow Elements (Mobile-Friendly) -->
+            <div class="absolute -left-8 -bottom-8 w-32 h-32 md:w-40 md:h-40 bg-pink-300/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -right-8 -top-8 w-32 h-32 md:w-40 md:h-40 bg-purple-300/30 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Content -->
+            <div class="relative z-10 space-y-2">
+                <h3 class="text-2xl sm:text-3xl md:text-4xl font-cloud font-bold text-gray-900 tracking-wide uppercase drop-shadow-sm">
+                    HUG LIFE LOVE PEPEKUN
+                </h3>
+                <p class="text-xs sm:text-sm text-gray-600 font-medium max-w-md mx-auto">
+                    Wrapped in cloud-like softness, crafted to bring endless warmth and smiles.
+                </p>
+            </div>
+
+        </div>
+    </section>
+            
+            <!-- PREMIUM TRUST BANNER (INTERACTIVE FLIP CARDS WITH PHOTOS) -->
+            <section class="py-12 bg-white/50 backdrop-blur-sm border-y border-pink-50/50 shadow-[0_4px_20px_rgba(0,0,0,0.02)] mt-8">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center">
+                    
+                    <!-- Card 1: Cotton -->
+                    <div class="group h-36 md:h-40 w-full [perspective:1000px]">
+                        <div class="trust-card relative h-full w-full rounded-2xl shadow-sm transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] cursor-pointer">
+                            <div class="absolute inset-0 h-full w-full rounded-2xl [backface-visibility:hidden] bg-white border border-pink-100 overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-end justify-center pb-4">
+                                <img src="card-1.png" alt="Ultra-Soft" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+                                <h4 class="text-xs md:text-sm font-bold text-white tracking-wide uppercase relative z-20">Ultra-Soft</h4>
+                            </div>
+                            <div class="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-br from-pink-400 to-pink-500 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center p-4 shadow-lg border border-pink-400">
+                                <h4 class="text-[13px] font-bold tracking-wide uppercase mb-1.5">Ultra-Soft Cotton</h4>
+                                <p class="text-xs text-white/90 leading-relaxed px-2">Premium hypoallergenic fill for cloud-like hugs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Washable -->
+                    <div class="group h-36 md:h-40 w-full [perspective:1000px]">
+                        <div class="trust-card relative h-full w-full rounded-2xl shadow-sm transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] cursor-pointer">
+                            <div class="absolute inset-0 h-full w-full rounded-2xl [backface-visibility:hidden] bg-white border border-pink-100 overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-end justify-center pb-4">
+                                <img src="card-2.png" alt="Washable" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+                                <h4 class="text-xs md:text-sm font-bold text-white tracking-wide uppercase relative z-20">Washable</h4>
+                            </div>
+                            <div class="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-br from-pink-400 to-pink-500 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center p-4 shadow-lg border border-pink-400">
+                                <h4 class="text-[13px] font-bold tracking-wide uppercase mb-1.5">Machine Washable</h4>
+                                <p class="text-xs text-white/90 leading-relaxed px-2">Easy care for long-lasting, squeaky-clean companions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Durable -->
+                    <div class="group h-36 md:h-40 w-full [perspective:1000px]">
+                        <div class="trust-card relative h-full w-full rounded-2xl shadow-sm transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] cursor-pointer">
+                            <div class="absolute inset-0 h-full w-full rounded-2xl [backface-visibility:hidden] bg-white border border-pink-100 overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-end justify-center pb-4">
+                                <img src="card-3.png" alt="Durable" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+                                <h4 class="text-xs md:text-sm font-bold text-white tracking-wide uppercase relative z-20 font-cloud">Durable</h4>
+                            </div>
+                            <div class="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-br from-pink-400 to-pink-500 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center p-4 shadow-lg border border-pink-400">
+                                <h4 class="text-[13px] font-bold tracking-wide uppercase mb-1.5 font-cloud">Built to Last</h4>
+                                <p class="text-xs text-white/90 leading-relaxed px-2 font-sans">Strong seams and quality materials made to withstand endless hugs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Gift-Ready -->
+                    <div class="group h-36 md:h-40 w-full [perspective:1000px]">
+                        <div class="trust-card relative h-full w-full rounded-2xl shadow-sm transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] cursor-pointer">
+                            <div class="absolute inset-0 h-full w-full rounded-2xl [backface-visibility:hidden] bg-white border border-pink-100 overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-end justify-center pb-4">
+                                <img src="card-4.png" alt="Gift-Ready" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+                                <h4 class="text-xs md:text-sm font-bold text-white tracking-wide uppercase relative z-20 font-cloud">Gift-Ready</h4>
+                            </div>
+                            <div class="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-br from-pink-400 to-pink-500 text-white [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center p-4 shadow-lg border border-pink-400">
+                                <h4 class="text-[13px] font-bold tracking-wide uppercase mb-1.5 font-cloud">The Perfect Gift</h4>
+                                <p class="text-xs text-white/90 leading-relaxed px-2 font-sans">Guaranteed to bring a smile to anyone's face, for any special occasion.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            
+            <!-- MAIN CATEGORIES -->
+            <section id="categories" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16 transition-all duration-500">
+                <div class="text-center mb-8">
+                  <h2 class="text-3xl md:text-4xl font-cloud font-semibold tracking-wide text-gray-900">Choose Your Companion</h2>
+                </div>
+                <div class="relative">
+                    <button type="button" data-arrow="left" onclick="scrollCategoryRow('category-grid', -1)" aria-label="Scroll left"
+                        class="flex absolute left-1 md:-left-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl">‹</button>
+                    <div id="category-grid" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 no-scrollbar py-4 px-2 scroll-pl-2 overscroll-x-contain">
+                        <!-- Dynamic categories go here -->
+                    </div>
+                    <button type="button" data-arrow="right" onclick="scrollCategoryRow('category-grid', 1)" aria-label="Scroll right"
+                        class="flex absolute right-1 md:-right-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl">›</button>
+                </div>
+            </section>
+            
+            <!-- CUTEST PEPES SLIDING SHOWCASE -->
+            <section class="py-16 md:py-20 overflow-hidden w-full relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-10 text-center">
+                    <span class="inline-block bg-pink-100 text-pink-600 text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full border border-pink-200 shadow-sm">Our Favorites</span>
+                   <h2 class="text-3xl md:text-4xl font-cloud font-semibold text-gray-900 mt-3 tracking-tight">Best Sellers</h2>
+                    <p class="text-gray-500 text-sm md:text-base mt-2">Tap any adorable companion to view full photos</p>
+                </div>
+               <div class="relative w-full overflow-hidden py-4">
+    <div class="absolute left-0 inset-y-0 w-24 md:w-48 bg-gradient-to-r from-[#F4E8FA] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 inset-y-0 w-24 md:w-48 bg-gradient-to-l from-[#F4E8FA] to-transparent z-10 pointer-events-none"></div>
+    
+    <!-- Updated for native swiping + JS auto-scroll -->
+    <div id="cutest-pepes-track" class="flex gap-8 overflow-x-auto no-scrollbar w-full items-center py-4 px-8 select-none cursor-grab active:cursor-grabbing"></div>
+</div>
+            
+            <!-- SUB CATEGORIES / COLLECTIONS -->
+            <section id="collections-section" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl md:text-3xl font-cloud font-semibold tracking-wide text-gray-900">Special Collections</h2>
+                </div>
+                <div class="relative">
+                    <button type="button" data-arrow="left" onclick="scrollCategoryRow('collection-grid', -1)" aria-label="Scroll left"
+                        class="flex absolute left-1 md:-left-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl">‹</button>
+                    <div id="collection-grid" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 no-scrollbar py-4 px-2 scroll-pl-2 overscroll-x-contain">
+                        <!-- Dynamic categories go here -->
+                    </div>
+                    <button type="button" data-arrow="right" onclick="scrollCategoryRow('collection-grid', 1)" aria-label="Scroll right"
+                        class="flex absolute right-1 md:-right-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl">›</button>
+                </div>
+            </section>
+
+           <!-- PRODUCT DISPLAY GRID (MODIFIED TO HORIZONTAL SWIPE WITH ARROWS) -->
+    <section id="product-display" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24 hidden opacity-0 transition-opacity duration-500">
+        <div class="flex items-center justify-between mb-8 md:mb-10 border-b border-gray-300 pb-4">
+            <h2 id="current-category-title" class="text-2xl md:text-3xl font-cloud font-semibold text-gray-900">Products</h2>
+            <button onclick="hideProducts()" class="text-xs md:text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors border border-gray-300 rounded-full px-4 md:px-5 py-2 bg-white/80 backdrop-blur hover:bg-white shadow-sm">
+                ← Back
+            </button>
+        </div>
+        
+        <!-- Relative Wrapper with Left/Right Scroll Buttons -->
+        <div class="relative">
+            <button type="button" onclick="scrollCategoryRow('product-grid', -1)" aria-label="Scroll left"
+                class="flex absolute left-1 md:-left-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl cursor-pointer">‹</button>
+            
+            <div id="product-grid" class="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full no-scrollbar pb-8 px-2 scroll-pl-2 overscroll-x-contain">
+                <!-- Products rendered dynamically -->
+            </div>
+
+            <button type="button" onclick="scrollCategoryRow('product-grid', 1)" aria-label="Scroll right"
+                class="flex absolute right-1 md:-right-5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-full bg-white/95 backdrop-blur shadow-lg border border-pink-100 text-gray-700 hover:text-pink-500 transition-colors pb-1 text-xl cursor-pointer">›</button>
+        </div>
+    </section>
+
+        </div>
+    </div>
+
+    <!-- 3-CARD SHOWCASE SECTION (UPGRADED) -->
+    <section class="bg-section-1 relative overflow-hidden py-24 md:py-32 flex flex-col justify-center items-center w-full">
+        <!-- Softer blended backdrop -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#F4E8FA]/80 via-white/40 to-[#F4E8FA]/90 backdrop-blur-sm z-0 pointer-events-none"></div>
+
+        <div class="relative z-10 w-full max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-center mt-8">
+            <!-- Left Card (Tilted Left) -->
+            <div class="group relative w-full aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 border-2 border-white/80 bg-white md:-rotate-3 hover:rotate-0 hover:scale-105 hover:shadow-2xl transition-all duration-500 hover:z-20 cursor-pointer">
+                <img id="card-left-img" src="1.png" class="w-full h-full object-cover transition-opacity duration-700" alt="Showcase Left">
+                <div class="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute bottom-5 left-5 right-5 h-1.5 bg-white/40 rounded-full overflow-hidden backdrop-blur-md">
+                    <div id="progress-left" class="h-full bg-white w-0 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+                </div>
+            </div>
+            
+            <!-- Center Card (Scaled Up) -->
+            <div class="group relative w-full aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-pink-900/20 border-2 border-white bg-white md:scale-110 z-10 hover:scale-110 hover:-translate-y-2 transition-all duration-500 hover:z-20 cursor-pointer">
+                <img id="card-center-img" src="4.png" class="w-full h-full object-cover transition-opacity duration-700" alt="Showcase Center">
+                <div class="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute bottom-5 left-5 right-5 h-1.5 bg-white/40 rounded-full overflow-hidden backdrop-blur-md">
+                    <div id="progress-center" class="h-full bg-white w-0 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+                </div>
+            </div>
+            
+            <!-- Right Card (Tilted Right) -->
+            <div class="group relative w-full aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 border-2 border-white/80 bg-white md:rotate-3 hover:rotate-0 hover:scale-105 hover:shadow-2xl transition-all duration-500 hover:z-20 cursor-pointer">
+                <img id="card-right-img" src="7.png" class="w-full h-full object-cover transition-opacity duration-700" alt="Showcase Right">
+                <div class="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute bottom-5 left-5 right-5 h-1.5 bg-white/40 rounded-full overflow-hidden backdrop-blur-md">
+                    <div id="progress-right" class="h-full bg-white w-0 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="bg-section-2 relative overflow-hidden py-16 md:py-24 border border-gray-200 shadow-sm">
+        <div class="absolute inset-0 bg-white/50 backdrop-blur-sm z-0 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-6 text-gray-900">More Than Just Toys.</h2>
+                <p class="text-gray-700 mb-6 leading-relaxed font-medium text-lg">At PEPEKUN, every plushie is designed
+                    with a personality. From our sleepy cats to our signature bamboo pandas, we focus on premium
+                    materials, unique branding, and unparalleled softness.</p>
+            </div>
+            <div class="h-[300px] md:h-[450px] rounded-[2rem] overflow-hidden border border-white/50 shadow-lg">
+                <img src="11.png" class="w-full h-full object-cover" alt="About PEPEKUN">
+            </div>
+        </div>
+    </section>
+
+    <!-- WALL OF LOVE / TESTIMONIALS SECTION -->
+    <section class="py-20 md:py-28 bg-[#F4E8FA]/30 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-pink-100 text-pink-600 text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full border border-pink-200 shadow-sm mb-3">Wall of Love</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Happy Hugs</h2>
+                <p class="text-gray-500 text-sm md:text-base mt-2">See why thousands have fallen in love with PEPEKUN</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-[2rem] p-8 shadow-sm border border-purple-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex text-yellow-400 text-lg mb-4">★★★★★</div>
+                    <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-8">"The softest plushie I have ever owned! It literally feels like hugging a cloud. I bought the sleepy cat and it hasn't left my bed since."</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">S</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-900">Raina</h4>
+                            <p class="text-xs text-gray-500">Verified Buyer – Sleepy Cat</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-[2rem] p-8 shadow-sm border border-purple-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex text-yellow-400 text-lg mb-4">★★★★★</div>
+                    <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-8">"I got this as a gift for my girlfriend and she absolutely adores it. The quality of the stitching and the premium feel is unmatched."</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-lg">J</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-900">Harsh</h4>
+                            <p class="text-xs text-gray-500">Verified Buyer – Sleepy Panda</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-[2rem] p-8 shadow-sm border border-purple-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex text-yellow-400 text-lg mb-4">★★★★★</div>
+                    <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-8">Gifted this cute cow plushie to my sister, she loved it.</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">E</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-900">Vnsh Raturi</h4>
+                            <p class="text-xs text-gray-500">Verified Buyer – Cow</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="bg-section-1 relative py-20 md:py-28 w-full">
+        <div class="absolute inset-0 bg-white/50 backdrop-blur-sm z-0 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="bg-white/90 backdrop-blur-md rounded-[3rem] border border-white shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+                
+                <!-- Left Column: Brand Info & Support Details -->
+                <div class="lg:col-span-5 bg-gradient-to-br from-purple-900 to-indigo-900 text-white p-8 md:p-12 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-pink-500/20 text-pink-300 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-pink-500/30">Get in Touch</span>
+                        <h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">We'd Love to Hear From You</h2>
+                        <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-8">
+                            Have questions about our sleepy plushies, tracking an order, or custom bulk materials? Reach out and our support team will reply within 24 hours.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6 pt-6 border-t border-purple-800/60 text-sm">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-pink-300 font-bold shrink-0">✉</div>
+                            <div>
+                                <p class="text-xs text-purple-300 uppercase tracking-wider">Email Support</p>
+                                <p class="font-medium text-white">pepekun.official@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-pink-300 font-bold shrink-0">🕒</div>
+                            <div>
+                                <p class="text-xs text-purple-300 uppercase tracking-wider">Working Hours</p>
+                                <p class="font-medium text-white">Mon – sunday: 10:00 AM – 7:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Form -->
+                <div class="lg:col-span-7 p-8 md:p-12 flex flex-col justify-center bg-white">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Send a Message</h3>
+                    <p class="text-gray-500 text-sm mb-8">Fill out the form below and we'll get back to your inbox shortly.</p>
+
+                    <form id="contact-form" class="space-y-5 text-left">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Your Name</label>
+                                <input id="contact-name" name="name" type="text" placeholder="e.g. john doe"
+                                    class="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100 bg-gray-50/50 text-sm transition-all"
+                                    required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Email Address</label>
+                                <input id="contact-email" name="email" type="email" placeholder="kuchupuchu@example.com"
+                                    class="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100 bg-gray-50/50 text-sm transition-all"
+                                    required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Your Message</label>
+                            <textarea id="contact-message" name="message" rows="4" placeholder="How can we help you today?"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100 bg-gray-50/50 text-sm transition-all resize-none"
+                                required></textarea>
+                        </div>
+                        <button id="contact-submit-btn" type="submit"
+                            class="w-full py-4 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-pink-500 transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2">
+                            <span>Send Message</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFESSIONAL FOOTER SECTION -->
+    <footer class="bg-white/80 backdrop-blur-lg text-brand-900 pt-16 pb-12 mt-20 border-t border-pink-100 shadow-[0_-10px_40px_rgba(244,232,250,0.5)] relative z-20">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            
+            <!-- Brand & Bio with Logo -->
+            <div class="space-y-4">
+                <img src="1pepe-logo.png" alt="PEPEKUN Logo" class="h-12 w-auto object-contain drop-shadow-sm">
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">
+                    Discover unparalleled softness with PepeKun. Premium plushies designed with personality, crafted with love.
+                </p>
+                <div class="flex gap-4 pt-2">
+                    <!-- Instagram Link -->
+                    <a href="https://www.instagram.com/pepekun.toys?srtk=MTFtYnE2eGt0N2t5OA==" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#F4E8FA] hover:bg-pink-500 hover:text-white flex items-center justify-center transition-all duration-300 text-pink-500 shadow-sm border border-pink-100 hover:-translate-y-1" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    
+                   <!-- Facebook Link (Official Brand Logo) -->
+                    <a href="https://www.facebook.com/share/1BsFJrHz61/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-300 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1" aria-label="Facebook">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+                            <path d="M16.671 15.542l.532-3.469h-3.328v-2.25c0-.949.465-1.874 1.956-1.874h1.514V5.007s-1.374-.235-2.686-.235c-2.741 0-4.533 1.662-4.533 4.669v2.643H7.078v3.469h3.047v8.385a12.19 12.19 0 003.75 0v-8.385h2.796z" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-pink-500 mb-4">Quick Links</h4>
+                <ul class="space-y-3 text-sm text-gray-500 font-medium">
+                    <li><a href="#home" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Home</a></li>
+                    <li><a href="#categories" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Shop Collections</a></li>
+                    <li><a href="#about" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> About Us</a></li>
+                    <li><a href="#contact" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Contact Support</a></li>
+                </ul>
+            </div>
+
+            <!-- PhonePe Policy Compliance Links -->
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-pink-500 mb-4">Policies & Compliance</h4>
+                <ul class="space-y-3 text-sm text-gray-500 font-medium">
+                    <li><a href="privacy.html" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Privacy Policy</a></li>
+                    <li><a href="refund.html" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Refund & Cancellation</a></li>
+                    <li><a href="return.html" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Return Policy</a></li>
+                    <li><a href="shippig.html" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Shipping & Delivery</a></li>
+                    <li><a href="terms.html" class="hover:text-pink-500 transition-colors flex items-center gap-2"><span class="text-pink-300">›</span> Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 border-t border-pink-100 pt-8 text-center text-gray-400 text-xs font-medium tracking-wide">
+            &copy; 2026 PEPEKUN. All rights reserved. Secured & Verified for Digital Payments.
+        </div>
+    </footer>
+
+    <!-- PRODUCT QUICK-VIEW MODAL -->
+    <div id="product-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-5xl bg-white rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+
+            <button onclick="closeModal()"
+                class="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur border border-gray-200 p-2 rounded-full hover:bg-gray-100 text-gray-800 transition-transform">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Image Track & Thumbnails Area -->
+            <div class="md:w-1/2 p-6 bg-gray-50 flex flex-col gap-4 overflow-y-auto border-r border-gray-100">
+                <div class="relative w-full aspect-square rounded-[2rem] overflow-hidden bg-white border border-gray-100 shadow-sm group/modal-slider">
+                    <!-- Swipeable Track container -->
+                    <div id="modal-swipe-track" class="flex overflow-x-auto snap-x snap-mandatory h-full w-full no-scrollbar relative z-10"></div>
+
+                    <!-- Desktop Navigation Arrows -->
+                    <button onclick="scrollModalSlider(-1)" class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 backdrop-blur hover:bg-gray-50 text-gray-900 w-10 h-10 rounded-full items-center justify-center opacity-0 group-hover/modal-slider:opacity-100 transition-all shadow-md z-30 pb-1 text-2xl leading-none cursor-pointer">‹</button>
+                    <button onclick="scrollModalSlider(1)" class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 backdrop-blur hover:bg-gray-50 text-gray-900 w-10 h-10 rounded-full items-center justify-center opacity-0 group-hover/modal-slider:opacity-100 transition-all shadow-md z-30 pb-1 text-2xl leading-none cursor-pointer">›</button>
+                </div>
+
+                <div class="grid grid-cols-4 gap-3 mt-2" id="modal-thumbnails"></div>
+            </div>
+
+            <!-- Details Area -->
+            <div class="md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto">
+                <div class="text-[11px] text-gray-500 font-bold tracking-widest uppercase mb-2" id="modal-category">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-2" id="modal-title"></h2>
+                <div class="text-xl font-medium text-gray-600 mb-6" id="modal-price"></div>
+
+        <!-- DYNAMIC COLOR SELECTION -->
+<div id="modal-colors-container" class="mb-6 hidden">
+    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Select Color <span class="text-pink-500">*</span></label>
+    <div id="modal-color-options" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+
+<!-- DYNAMIC SIZE SELECTION -->
+<div id="modal-sizes-container" class="mb-6 hidden">
+    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Select Size <span class="text-pink-500">*</span></label>
+    <div id="modal-size-options" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+
+                <div class="flex gap-6 border-b border-gray-200 mb-6">
+                    <button onclick="switchTab('desc')" id="tab-btn-desc"
+                        class="pb-2 font-medium text-gray-900 border-b-2 border-gray-900">Description</button>
+                    <button onclick="switchTab('specs')" id="tab-btn-specs"
+                        class="pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent">Specifications</button>
+                </div>
+
+                <div id="tab-desc" class="text-gray-600 mb-6 leading-relaxed text-sm md:text-base block"></div>
+                <div id="tab-specs" class="hidden">
+                    <ul class="text-gray-600 space-y-2 text-sm list-disc pl-5" id="modal-specs-list"></ul>
+                </div>
+
+                <div class="mt-auto flex gap-4 pt-8">
+                    <button id="modal-add-cart-btn"
+                        class="flex-1 bg-white border border-gray-300 text-gray-800 py-4 rounded-full font-medium hover:border-gray-900 transition-colors shadow-sm">Add
+                        to Cart</button>
+                    <button id="modal-buy-now-btn" onclick="window.location.href='checkout.html'" class="flex-1 bg-brand-900 text-white py-4 rounded-full font-medium hover:bg-pink-500 transition-colors shadow-md">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN IMAGE GALLERY OVERLAY -->
+    <div id="fullscreen-gallery" class="fixed inset-0 z-[200] hidden flex-col bg-black/95 opacity-0 transition-opacity duration-300">
+        <button onclick="closeFullscreenGallery()" class="absolute top-4 right-4 z-50 text-white/80 p-4 hover:text-white transition-colors cursor-pointer">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div id="gallery-swipe-track" class="flex overflow-x-auto snap-x snap-mandatory h-full w-full no-scrollbar relative touch-pan-x items-center"></div>
+        <button onclick="scrollGallerySlider(-1)" class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 border border-white/20 hover:bg-white/20 text-white w-12 h-12 rounded-full items-center justify-center transition-all z-50 text-3xl pb-1 cursor-pointer backdrop-blur">‹</button>
+        <button onclick="scrollGallerySlider(1)" class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 border border-white/20 hover:bg-white/20 text-white w-12 h-12 rounded-full items-center justify-center transition-all z-50 text-3xl pb-1 cursor-pointer backdrop-blur">›</button>
+        <div id="gallery-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 font-medium tracking-widest text-sm z-50 bg-black/50 px-4 py-1.5 rounded-full backdrop-blur"></div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            }
+        }
+
+        const bannerImgElement = document.getElementById('banner-slider');
+        const bannerPhotos = [
+            bannerImgElement ? bannerImgElement.src : '',
+            'banner2.png',
+            'banner3.png'
+        ];
+        let bannerIndex = 0;
+
+        setInterval(() => {
+            if (bannerImgElement && bannerPhotos.length > 1) {
+                bannerImgElement.classList.add('opacity-0');
+                setTimeout(() => {
+                    bannerIndex = (bannerIndex + 1) % bannerPhotos.length;
+                    if (bannerPhotos[bannerIndex]) {
+                        bannerImgElement.src = bannerPhotos[bannerIndex];
+                    }
+                    bannerImgElement.classList.remove('opacity-0');
+                }, 500);
+            }
+        }, 4000);
+
+        function switchTab(tab) {
+            const tabDesc = document.getElementById('tab-desc');
+            const tabSpecs = document.getElementById('tab-specs');
+            const btnDesc = document.getElementById('tab-btn-desc');
+            const btnSpecs = document.getElementById('tab-btn-specs');
+
+            if (tab === 'desc') {
+                tabDesc.classList.remove('hidden');
+                tabSpecs.classList.add('hidden');
+                btnDesc.className = "pb-2 font-medium text-gray-900 border-b-2 border-gray-900";
+                btnSpecs.className = "pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent transition-colors";
+            } else {
+                tabSpecs.classList.remove('hidden');
+                tabDesc.classList.add('hidden');
+                btnSpecs.className = "pb-2 font-medium text-gray-900 border-b-2 border-gray-900";
+                btnDesc.className = "pb-2 font-medium text-gray-400 hover:text-gray-900 border-b-2 border-transparent transition-colors";
+            }
+        }
+
+        const leftImages = ['2.png', '3.png'];
+        const rightImages = ['5.png', '6.png'];
+        const centerImages = ['8.png', '9.png'];
+
+        let indices = { left: 0, center: 0, right: 0 };
+        const leftImgEl = document.getElementById('card-left-img');
+        const centerImgEl = document.getElementById('card-center-img');
+        const rightImgEl = document.getElementById('card-right-img');
+
+        const progLeft = document.getElementById('progress-left');
+        const progCenter = document.getElementById('progress-center');
+        const progRight = document.getElementById('progress-right');
+
+        function startProgress(el, duration) {
+            if (!el) return;
+            el.style.transition = 'none';
+            el.style.width = '0%';
+            void el.offsetWidth;
+            el.style.transition = `width ${duration}ms linear`;
+            el.style.width = '100%';
+        }
+
+        function updateCardImage(imgEl, progEl, imgArray, key, duration) {
+            if (!imgEl) return;
+            imgEl.classList.add('opacity-0');
+            setTimeout(() => {
+                indices[key] = (indices[key] + 1) % imgArray.length;
+                imgEl.src = imgArray[indices[key]];
+                imgEl.classList.remove('opacity-0');
+                startProgress(progEl, duration);
+            }, 500); 
+        }
+
+        setTimeout(() => {
+            startProgress(progLeft, 4000);
+            startProgress(progRight, 4000);
+            startProgress(progCenter, 6000);
+        }, 100);
+
+        setInterval(() => {
+            updateCardImage(leftImgEl, progLeft, leftImages, 'left', 4000);
+            updateCardImage(rightImgEl, progRight, rightImages, 'right', 4000);
+        }, 4000);
+
+        setInterval(() => {
+            updateCardImage(centerImgEl, progCenter, centerImages, 'center', 6000);
+        }, 6000);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth < 768) {
+                const trustCards = document.querySelectorAll('.trust-card');
+                
+                setInterval(() => {
+                    trustCards.forEach(card => card.style.transform = '');
+                    const randomCard = trustCards[Math.floor(Math.random() * trustCards.length)];
+                    randomCard.style.transform = 'rotateY(180deg)';
+                }, 3000); 
+            }
+        });
+    </script>
+
+    <!-- EXTERNAL JS -->
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

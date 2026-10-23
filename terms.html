@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terms and Conditions for PEPEKUN online store.">
+  <title>Terms and Conditions | PEPEKUN</title>
+  <style>
+    /* PEPEKUN — shared policy page styling*/
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap');
+
+    :root {
+      --pk-ink: #392b36;
+      --pk-muted: #786b76;
+      --pk-pink: #e9a9c1;
+      --pk-pink-deep: #c96d93;
+      --pk-pink-pale: #fff0f5;
+      --pk-cream: #fffaf8;
+      --pk-line: #f0dfe6;
+      --pk-white: #ffffff;
+      --pk-shadow: 0 20px 55px rgba(111, 64, 86, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--pk-ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      background:
+        radial-gradient(ellipse at 8% 5%, rgba(255, 219, 233, .72), transparent 32rem),
+        radial-gradient(ellipse at 95% 35%, rgba(255, 233, 222, .62), transparent 30rem),
+        var(--pk-cream);
+    }
+    a { color: var(--pk-pink-deep); text-underline-offset: 4px; }
+    a:hover { color: #9f456a; }
+
+    .site-header {
+      position: relative;
+      overflow: hidden;
+      padding: 28px 20px 74px;
+      text-align: center;
+      background: linear-gradient(135deg, #ffe5ef 0%, #fff4f7 52%, #ffede5 100%);
+      border-bottom: 1px solid rgba(224, 169, 191, .35);
+    }
+    .site-header::before, .site-header::after {
+      content: "♡";
+      position: absolute;
+      color: rgba(201, 109, 147, .19);
+      font-size: 112px;
+      line-height: 1;
+      font-family: 'Nunito', sans-serif;
+      pointer-events: none;
+    }
+    .site-header::before { left: max(5%, calc((100% - 1000px) / 2)); top: 12px; transform: rotate(-14deg); }
+    .site-header::after { right: max(5%, calc((100% - 1000px) / 2)); bottom: 0; transform: rotate(12deg); }
+    .brand {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.15;
+      font-weight: 900;
+      letter-spacing: .045em;
+    }
+    .brand a { color: var(--pk-ink); text-decoration: none; }
+    .brand-tagline {
+      position: relative;
+      z-index: 1;
+      margin: 8px 0 0;
+      color: #9e7186;
+      font-size: .9rem;
+      letter-spacing: .16em;
+      text-transform: lowercase;
+    }
+
+    .policy-wrap {
+      width: min(920px, calc(100% - 32px));
+      margin: -42px auto 38px;
+      position: relative;
+      z-index: 2;
+    }
+    .policy-card {
+      padding: clamp(24px, 5vw, 56px);
+      border: 1px solid rgba(240, 208, 221, .9);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--pk-shadow);
+    }
+    .policy-card h1 {
+      margin: 0 0 8px;
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -.035em;
+    }
+    .policy-card h1::after {
+      content: "";
+      display: block;
+      width: 72px;
+      height: 5px;
+      margin-top: 17px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--pk-pink-deep), #f4c5d7);
+    }
+    .effective {
+      display: inline-flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 8px 0 24px;
+      padding: 6px 12px;
+      border: 1px solid #f5dbe5;
+      border-radius: 999px;
+      background: var(--pk-pink-pale);
+      color: var(--pk-muted);
+      font-size: .84rem;
+    }
+    .policy-card h2 {
+      margin: 32px 0 10px;
+      padding-left: 14px;
+      border-left: 3px solid var(--pk-pink);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.22rem;
+      line-height: 1.4;
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+    .policy-card p { margin: 0 0 15px; }
+    .policy-card ul, .policy-card ol { padding-left: 1.35rem; }
+    .policy-card li { margin: 7px 0; padding-left: 3px; }
+    .policy-card strong { color: #4b3442; }
+    .policy-card hr { border: 0; border-top: 1px solid var(--pk-line); margin: 28px 0; }
+    .policy-card blockquote {
+      margin: 20px 0;
+      padding: 15px 18px;
+      border-left: 3px solid var(--pk-pink-deep);
+      border-radius: 0 12px 12px 0;
+      background: var(--pk-pink-pale);
+    }
+    .policy-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto 28px;
+      padding: 18px;
+      border: 1px solid var(--pk-line);
+      border-radius: 20px;
+      background: rgba(255,255,255,.76);
+    }
+    .policy-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 1px solid #f0d5e0;
+      border-radius: 999px;
+      background: #fff;
+      color: #795267;
+      font-size: .88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .policy-links a:hover {
+      transform: translateY(-2px);
+      border-color: #df9eb8;
+      background: var(--pk-pink-pale);
+    }
+    .site-footer {
+      padding: 26px 18px 32px;
+      border-top: 1px solid var(--pk-line);
+      color: var(--pk-muted);
+      text-align: center;
+      font-size: .86rem;
+    }
+    .site-footer p { margin: 4px 0; }
+    .site-footer p:first-child { color: #6e5363; font-weight: 700; }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .site-header { padding: 25px 16px 64px; }
+      .site-header::before, .site-header::after { font-size: 72px; }
+      .policy-wrap { width: calc(100% - 20px); margin-top: -32px; }
+      .policy-card { padding: 24px 19px; border-radius: 20px; }
+      .policy-card h2 { margin-top: 26px; font-size: 1.12rem; }
+      .policy-links { width: calc(100% - 20px); gap: 8px; padding: 12px; }
+      .policy-links a { flex: 1 1 42%; font-size: .82rem; padding: 8px 10px; }
+    }
+    @media print {
+      body { background: white; }
+      .site-header { padding-bottom: 24px; background: white; }
+      .policy-wrap { width: 100%; margin: 20px auto; }
+      .policy-card { box-shadow: none; border: 0; padding: 0; }
+      .policy-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <p class="brand"><a href="index.html">PEPEKUN</a></p>
+    <p class="brand-tagline">hug life pepekun</p>
+  </header>
+  <main class="policy-wrap">
+    <article class="policy-card">
+      
+<h1>Terms and Conditions</h1>
+<p class="effective"><strong>Effective Date:</strong> October 9, 2026</p>
+<p>Welcome to PEPEKUN! These Terms and Conditions govern your access to and use of <strong>pepekun.com</strong>, operated by <strong>Radhey Enterprises</strong> under the brand name PEPEKUN.</p>
+<p>By accessing our website or placing an order, you agree to the terms outlined below. Please read them carefully before making a purchase.</p>
+<h2>1. Business Information</h2>
+<ul><li><strong>Brand Name:</strong> PEPEKUN</li><li><strong>Legal Business Name:</strong> Radhey Enterprises</li><li><strong>Business Address:</strong> S-3 Extn, Pandav Nagar Delhi-110092</li><li><strong>Email:</strong> pepekun.official@gmail.com</li><li><strong>Phone / WhatsApp:</strong> +91 7042080708</li></ul>
+<h2>2. Products and Descriptions</h2>
+<p>PEPEKUN offers soft toys, plushies, and related products. We make reasonable efforts to display accurate product descriptions, images, colours, sizes, and prices. Slight variations in colour or appearance may occur due to screen settings or manufacturing differences.</p>
+<h2>3. Pricing and Payments</h2>
+<p>All prices displayed on our website are in Indian Rupees (INR), unless stated otherwise. Applicable taxes and shipping charges, if any, will be displayed during checkout. Payments may be made through direct UPI QR, PhonePe, or other available payment gateways on our website. Orders are subject to successful payment confirmation.</p>
+<h2>4. Order Confirmation and Cancellation</h2>
+<p>An order confirmation indicates that we have received your order. We may cancel an order in cases such as product unavailability, pricing errors, suspected fraudulent activity, or payment issues. If payment has already been received for an order cancelled by us, an appropriate refund will be initiated.</p>
+<p>Customers wishing to cancel an order should contact us at pepekun.official@gmail.com <strong>before the order is dispatched</strong>. Once an order is dispatched, it cannot be cancelled.</p>
+<h2>5. Shipping and Delivery</h2>
+<p>Orders will be processed and shipped according to our Shipping Policy. We ship within India only. Delivery timelines are estimates and may vary because of courier delays, weather conditions, public holidays, or other circumstances beyond our reasonable control.</p>
+<h2>6. Returns and Refunds</h2>
+<p>Returns, exchanges, and refunds are governed by our Return Policy and Refund Policy, available on our website. We do not accept change-of-mind returns. Please review these policies before placing an order.</p>
+<h2>7. Customer Responsibilities</h2>
+<p>Customers must provide accurate contact information, shipping addresses, and payment details when placing an order. PEPEKUN is not responsible for delivery problems caused by incorrect information supplied by the customer, subject to applicable law.</p>
+<h2>8. Intellectual Property</h2>
+<p>The PEPEKUN brand name, logo, website content, product photographs, graphics, and other original materials are protected by applicable intellectual property laws. They may not be copied, reproduced, or used commercially without prior written permission from the rightful owner.</p>
+<h2>9. Limitation of Liability</h2>
+<p>To the extent permitted by applicable law, PEPEKUN shall not be liable for indirect or incidental losses arising from the use of our website or delays caused by circumstances outside our reasonable control. Nothing in these terms excludes liability or consumer rights that cannot legally be excluded.</p>
+<h2>10. Privacy</h2><p>Personal information collected during browsing, checkout, or customer support interactions will be handled in accordance with our Privacy Policy.</p>
+<h2>11. Changes to These Terms</h2><p>We may update these Terms and Conditions when necessary. Revised terms will be published on this page with an updated effective date. Changes will apply as permitted by applicable law.</p>
+<h2>12. Governing Law and Disputes</h2><p>These terms are governed by the laws of India. Any disputes shall be handled by the appropriate courts or dispute-resolution authorities in accordance with applicable law.</p>
+<h2>13. Contact Us</h2><p>For questions about these Terms and Conditions, contact us using the business details above.</p>
+
+    </article>
+  </main>
+  <nav class="policy-links" aria-label="Legal policies">
+    <a href="terms.html">Terms &amp; Conditions</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="return.html">Return Policy</a>
+    <a href="shipping.html">Shipping Policy</a>
+  </nav>
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> PEPEKUN. All rights reserved.</p>
+    <p>Radhey Enterprises · S-3 Extn, Pandav Nagar Delhi-110092</p>
+  </footer>
+</body>
+</html>
